@@ -71,25 +71,17 @@ void bst::maxDepthRun(){
 	int depth = maxDepth(root);
 	cout << "The max Depth is:" << depth << endl;
 }
-void bst::inorderRecursion(node*n)
-{
+void bst::inorderRecursion(node*n){
 if (n != NULL){
 	inorderRecursion(n->left);
-//else
 	cout << n->data << endl;
-	outFile << n->data << endl;
-//if (n->right != NULL)
 	inorderRecursion(n->right);
+	}
 }
-}
-void bst::preorderRecursion(node*n)
-{
+void bst::preorderRecursion(node*n){
 if(n != NULL){
 	cout << n->data << endl;
-	outFile << n->data << endl;
-//if (n->left != NULL)
 	preorderRecursion(n->left);
-//else if (n->right != NULL)
 	preorderRecursion(n->right);
 }
 }
@@ -97,11 +89,8 @@ void bst::postorderRecursion(node*n)
 {
 if (n != NULL){
 	postorderRecursion(n->left);
-//else if (n->right != NULL)
 	postorderRecursion(n->right);
-//else  
 	cout << n->data << endl;
-	outFile << n->data << endl;
 }
 }
 //Deconstructor
@@ -120,25 +109,16 @@ clear(root);
 
 void bst::postorderprint()
 {
-outFile.open("postorderprint.txt");
-outFile << "Post Order Print:" << endl;
 postorderRecursion(root);
-outFile.close();
 }
 
 void bst::preorderprint()
 {
-outFile.open("preorderprint.txt");
-outFile << "Pre Order Print:" << endl;
 preorderRecursion(root);
-outFile.close();
 }
 
 void bst::inorderprint()
 {
-outFile.open("inorderprint.txt");
-outFile << "In Order Print:" << endl;
 inorderRecursion(root);
-outFile.close();
 }
 
