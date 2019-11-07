@@ -36,6 +36,10 @@ void insert(node*n, int data);
 void add(int data);
 //This function calls insert function
 
+int maxDepth(node*n);
+//this function may work?
+void maxDepthRun();
+
 void postorderprint();
 
 void preorderprint();

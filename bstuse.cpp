@@ -4,7 +4,7 @@ int main()
 ifstream inFile;
 int choice;
 inFile.open("lots_ints.txt");
-	bst tree;
+bst tree;
 bst();
 cout << "Enter an integer of how many Nodes you want in the BST: ";
 cin >> choice;
@@ -26,6 +26,7 @@ cout << endl;
 cout << "In Order Print" << endl;
 tree.inorderprint();
 cout << endl;
+tree.maxDepthRun();
 inFile.close();
 tree.destroy();
 return 0;
