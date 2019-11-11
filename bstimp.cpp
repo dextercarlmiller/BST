@@ -38,6 +38,7 @@ void bst::insert(node*n, int data){
 		}
 	}
 	n->height = height(n);
+	
 }
 int bst::height(node* node){  
     if (node == NULL)  
@@ -54,7 +55,9 @@ int bst::height(node* node){
     }  
 }
 int bst::balance(node*node){
-	
+	if (node == NULL)
+		return 0;
+	return (height(node->left) - height(node->right))	
 }
 void bst::maxDepthRun(){
 	int depth = height(root);
