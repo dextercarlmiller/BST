@@ -38,10 +38,11 @@ void add(int data);
 
 int height(node*n);
 //this function gets the height of a node
-
+void maxDepthRun();
 int balance(node*n);
 //this function gets the balance factor (left - right)
-void maxDepthRun();
+
+void LeftRotate(node*n);
 
 
 
