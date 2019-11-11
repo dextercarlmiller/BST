@@ -9,49 +9,43 @@ void bst::add(int data){
 node* bst::createNode(int data){
 	node* Newnode = new node;
 	Newnode->data = data;
+	Newnode->height = 0;
 	Newnode->left = NULL;
 	Newnode->right = NULL;
 	return Newnode;
 }
 void bst::insert(node*n, int data){
 	// if nothing, create
-	if (root == NULL)
-	{
+	if (root == NULL){
 		root = createNode(data);
 	}
-	// if a left node exists, move left	
-	else if (n->data > data)
-	{
-		if(n->left != NULL) 
-		{
+	// if data is less than node data, move left	
+	else if (n->data > data){
+		if(n->left != NULL){
 			insert(n->left, data);
 		}
-		else
-		{
+		else{
 			n->left = createNode(data);
 		}
 	}
-	// if a right node exists, move right
-	else if (n->data < data)
-	{
-		if(n->right != NULL)
-		{
+	// if data is greater than node data, move right
+	else if (n->data < data){
+		if(n->right != NULL){
 			insert(n->right, data);
 		}
-		else
-		{
+		else{
 			n->right = createNode(data);
 		}
 	}
+	n->height = height(n);
 }
-int bst::maxDepth(node* node){  
+int bst::height(node* node){  
     if (node == NULL)  
         return 0;  
-    else
-    {  
+    else{  
         /* compute the depth of each subtree */
-        int lDepth = maxDepth(node->left);  
-        int rDepth = maxDepth(node->right);  
+        int lDepth = height(node->left);  
+        int rDepth = height(node->right);  
       
         /* use the larger one */
         if (lDepth > rDepth)  
@@ -59,8 +53,11 @@ int bst::maxDepth(node* node){
         else return(rDepth + 1);  
     }  
 }
+int bst::balance(node*node){
+	
+}
 void bst::maxDepthRun(){
-	int depth = maxDepth(root);
+	int depth = height(root);
 	cout << "The max Depth is:" << depth << endl;
 }
 void bst::inorderRecursion(node*n){
