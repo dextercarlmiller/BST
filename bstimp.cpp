@@ -4,7 +4,8 @@ bst::bst(){
 	root = NULL;
 }
 void bst::add(int data){
-	insert (root,data);
+	root = insert(root,data);
+	cout << "root --------" << root->data << endl;
 }
 node* bst::createNode(int data){
 	node* Newnode = new node;
@@ -12,33 +13,30 @@ node* bst::createNode(int data){
 	Newnode->height = 0;
 	Newnode->left = NULL;
 	Newnode->right = NULL;
+	cout << "insert value:" << data << endl;
 	return Newnode;
 }
-void bst::insert(node*n, int data){
+node* bst::insert(node*n, int data){
+	//Step 1: Standard BST insertion
 	// if nothing, create
-	if (root == NULL){
-		root = createNode(data);
+	if (n == NULL){
+		return createNode(data);
 	}
 	// if data is less than node data, move left	
-	else if (n->data > data){
-		if(n->left != NULL){
-			insert(n->left, data);
+	if (n->data > data){
+			n->left = insert(n->left, data);
 		}
-		else{
-			n->left = createNode(data);
-		}
-	}
 	// if data is greater than node data, move right
 	else if (n->data < data){
-		if(n->right != NULL){
-			insert(n->right, data);
+			n->right = insert(n->right, data);
 		}
-		else{
-			n->right = createNode(data);
-		}
-	}
+	else
+		return n;
+	//update height
 	n->height = height(n);
-
+	//balance the tree
+	return balance(n);
+	
 }
 int bst::height(node* node){  
     if (node == NULL)  
@@ -47,19 +45,48 @@ int bst::height(node* node){
         /* compute the depth of each subtree */
         int lDepth = height(node->left);  
         int rDepth = height(node->right);  
-      
+		
         /* use the larger one */
-        if (lDepth > rDepth)  
-            return(lDepth + 1);  
-        else return(rDepth + 1);  
-    }  
+        if (lDepth > rDepth){
+			return(lDepth + 1); 
+		}  
+        else{ 
+			return(rDepth + 1);  
+        }
+	}  
 }
-int bst::balance(node*node){
+node* bst::balance(node*node){
+	int bal_factor = balanceFactor(node);
+	if (bal_factor >1){
+		if (balanceFactor(node->left) > 0){
+			cout << endl << "---rr_rotate---" << endl;
+			return RightRotate(node);
+		}
+		else {
+			cout << endl << "---lr_rotate---" << endl;
+			node->left = LeftRotate(node->left);
+			return RightRotate(node);
+		}
+	}
+	else if (bal_factor < -1){
+		if (balanceFactor(node->right) > 0){
+			cout << endl << "---rl_rotate---" << endl;
+			node->right = RightRotate(node->right);
+			return LeftRotate(node);
+		}
+		else{
+			cout << endl << "---ll_rotate---" << endl;
+			return LeftRotate(node);
+		}
+	}
+	return node;	
+}
+int bst::balanceFactor(node*node){
 	if (node == NULL)
 		return 0;
 	return (height(node->left) - height(node->right));
 }
-void bst::LeftRotate(node*n){
+node* bst::LeftRotate(node*n){
 	//set variables
 	node* y = n->right;
 	node* T2 = y->left;
@@ -69,6 +96,18 @@ void bst::LeftRotate(node*n){
 	//update heights
 	n->height = height(n);
 	y->height = height(y);
+	return y;
+}
+node* bst::RightRotate(node*n){
+	node* y = n->left;
+	node* T2 = y->right;
+
+	y->right = n;
+	n->left = T2;
+
+	n->height = height(n);
+	y->height = height(y);
+	return y;
 }
 void bst::inorderRecursion(node*n){
 	if (n != NULL){
@@ -100,7 +139,23 @@ void bst::preorderprint(){
 void bst::inorderprint(){
 	inorderRecursion(root);
 }
-
+void bst::show(int l){
+	cout << endl << "AVL Tree:" << endl;
+	print(root,l);
+}
+void bst::print(node *p, int l) {
+   int i;
+   if (p != NULL) {
+      print(p->left, l+ 1);
+      cout<<" ";
+      if (p == root)
+         cout << "Root -> ";
+      for (i = 0; i < l&& p != root; i++)
+         cout << " ";
+      cout << p->data;
+      print(p->right, l + 1);
+   }
+}
 //Deconstructor
 void bst::clear(node*n){
 	if(n->left != NULL)
