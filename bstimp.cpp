@@ -1,5 +1,4 @@
 #include "BST.h"
-
 bst::bst(){
 	root = NULL;
 }
@@ -36,7 +35,6 @@ node* bst::insert(node*n, int data){
 	n->height = height(n);
 	//balance the tree
 	return balance(n);
-	
 }
 int bst::height(node* node){  
     if (node == NULL)  
@@ -167,4 +165,3 @@ void bst::clear(node*n){
 void bst::destroy(){
 	clear(root);
 }
-
